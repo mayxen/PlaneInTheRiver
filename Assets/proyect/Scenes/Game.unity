@@ -503,8 +503,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horSpeed: 5
   verSpeed: 5
+  missileSpeed: 10
   horizontalLimit: 0
   verticalLimit: 0
+  missile: {fileID: 1595502148754300, guid: 0430ab089ff3c7e44b78619c372f884d, type: 2}
 --- !u!212 &182943946
 SpriteRenderer:
   m_ObjectHideFlags: 0
