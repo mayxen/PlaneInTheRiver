@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-
+    public delegate void fuelHandler();
+    public event fuelHandler OnFuel;
     public float horSpeed = 5f;
     public float verSpeed = 5f;
     public float missileSpeed = 10f;
@@ -13,8 +14,8 @@ public class PlayerController : MonoBehaviour {
     bool isFiring;
     // Use this for initialization
     void Start () {
-		horizontalLimit = Camera.main.pixelWidth / 2 * Camera.main.aspect / 100 -2;
-        verticalLimit = Camera.main.pixelHeight / 2 * Camera.main.aspect / 100 - 2;
+		horizontalLimit = Screen.width* Camera.main.aspect / 2f / 100f -2;
+        verticalLimit = Screen.height * Camera.main.aspect / 2f / 100f -2;
     }
 	
 	// Update is called once per frame
@@ -49,5 +50,19 @@ public class PlayerController : MonoBehaviour {
             isFiring = false;
         }
         
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("enemyBullet") || collision.CompareTag("Enemy"))
+        {
+            Destroy(gameObject);
+            Destroy(collision.gameObject);
+        }
+        else if (collision.CompareTag("fuel") && OnFuel!=null)
+        {
+            Destroy(collision.gameObject);
+            OnFuel();
+        }
     }
 }
